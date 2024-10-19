@@ -569,9 +569,6 @@ namespace SpiritMod.World
 
 			var ignoreTiles = new List<ushort>()
 			{
-				TileID.BlueDungeonBrick,
-				TileID.GreenDungeonBrick,
-				TileID.PinkDungeonBrick,
 				TileID.SandstoneBrick,
 				TileID.Hive,
 				TileID.LihzahrdBrick,
@@ -599,15 +596,6 @@ namespace SpiritMod.World
 			var ignoreWalls = new List<ushort>()
 			{
 				WallID.SandstoneBrick,
-				WallID.BlueDungeonSlabUnsafe,
-				WallID.BlueDungeonTileUnsafe,
-				WallID.BlueDungeonUnsafe,
-				WallID.GreenDungeonSlabUnsafe,
-				WallID.GreenDungeonTileUnsafe,
-				WallID.GreenDungeonUnsafe,
-				WallID.PinkDungeonSlabUnsafe,
-				WallID.PinkDungeonTileUnsafe,
-				WallID.PinkDungeonUnsafe,
 				WallID.LihzahrdBrickUnsafe,
 				WallID.HiveUnsafe,
 				WallID.HardenedSand,
@@ -681,7 +669,7 @@ namespace SpiritMod.World
 					{
 						Tile tile = Framing.GetTileSafely(tileX, tileY);
 
-						if (IsOneOf(tile, ignoreTiles, ignoreWalls))
+						if (IsOneOf(tile, ignoreTiles, ignoreWalls) || Main.tileDungeon[tile.TileType] || Main.wallDungeon[tile.WallType])
 							continue;
 
 						tile.TileType = TileID.Dirt;
