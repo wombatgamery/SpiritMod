@@ -56,7 +56,7 @@ internal class BoulderMicropass : Micropass
 				}
 			}
 
-			if (fail || Main.tileDungeon[Main.tile[x, y + 1].TileType)
+			if (fail || !GenVars.structures.CanPlace(new Rectangle(x - 10, y - 10, 21, 21)) || Main.tileDungeon[Main.tile[x, y + 1].TileType)
 			{
 				i--;
 				continue;
