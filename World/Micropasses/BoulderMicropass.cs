@@ -56,12 +56,12 @@ internal class BoulderMicropass : Micropass
 				}
 			}
 
-			if (fail)
+			if (fail || Main.tileDungeon[Main.tile[x, y + 1].TileType)
 			{
 				i--;
 				continue;
 			}
-
+   
 			PlaceSingleBoulderFlatFaced(x, y);
 		}
 	}
