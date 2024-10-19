@@ -18,7 +18,7 @@ namespace SpiritMod.World.Micropasses
 			TileID.LavaMoss, TileID.PurpleMoss, TileID.RedMoss, TileID.XenonMoss };
 
 		private static int[] InvalidTypes = [ TileID.Sand, TileID.Sandstone, TileID.HardenedSand, TileID.Ebonsand, TileID.Crimsand, TileID.CorruptSandstone, TileID.CrimsonSandstone, 
-			TileID.CorruptHardenedSand, TileID.CrimsonHardenedSand, TileID.BlueDungeonBrick, TileID.GreenDungeonBrick, TileID.PinkDungeonBrick, TileID.ObsidianBrick, TileID.GoldBrick, 
+			TileID.CorruptHardenedSand, TileID.CrimsonHardenedSand, TileID.Spike, TileID.ObsidianBrick, TileID.GoldBrick, 
 			TileID.MinecartTrack, TileID.JungleGrass ];
 
 		public override int GetWorldGenIndexInsert(List<GenPass> passes, ref bool afterIndex) => passes.FindIndex(genpass => genpass.Name.Equals("Sunflowers"));
@@ -34,7 +34,7 @@ namespace SpiritMod.World.Micropasses
 				int y = WorldGen.genRand.Next((int)Main.worldSurface, (int)(Main.maxTilesY * 0.6f));
 
 				Tile tile = Main.tile[x, y];
-				if (tile.HasTile) //Find open space
+				if (tile.HasTile && GenVars.structures.CanPlace(new Rectangle(x - 10, y - 10, 21, 21))) //Find open space
 				{
 					i--;
 					continue;
@@ -44,7 +44,8 @@ namespace SpiritMod.World.Micropasses
 				{
 					for (int j = y - 10; j < y + 10; ++j)
 					{
-						if (Main.tile[v, j].HasTile && InvalidTypes.Contains(Main.tile[v, j].TileType))
+	 					Tile tile = Main.tile[v, j];
+						if (tile.HasTile && (InvalidTypes.Contains(tile.TileType) || Main.tileDungeon[tile.TileType] || Main.wallDungeon[tile.WallType]))
 						{
 							i--;
 							goto retry;
